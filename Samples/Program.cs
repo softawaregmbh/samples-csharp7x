@@ -32,7 +32,7 @@ namespace Samples
 
         #endregion
 
-        #region throws
+        #region throw expressions
 
         private readonly string[] args;
 
