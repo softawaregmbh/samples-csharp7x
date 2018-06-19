@@ -251,6 +251,10 @@ namespace Samples
 
             Square(from10To20);
             Print(from5To25);
+
+            // Spans can also be created for strings:
+            var span = "<div>Hello World!</div>".AsSpan(5, 12); // as opposed to Substring(), no additional memory is allocated
+            WriteLine(span[span.Length - 1]);
         }
 
         static void Square(Span<int> span)
