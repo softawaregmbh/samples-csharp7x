@@ -150,7 +150,7 @@ namespace Samples
             return (r.Width, r.Height);
         }
 
-        // This method expects a tuple as parameter.
+        // This method expects a tuple of two ints as parameter.
         static void PrintSize((int width, int height) size)
         {
             WriteLine($"{size.width}; {size.height}");
@@ -161,7 +161,7 @@ namespace Samples
             var r = new Rectangle(5, 5, 10, 10);
 
             // The names actually don't really matter. They are just aliases for Item1 and Item2.
-            //( If the types match, two tuples are compatible and can be assigned to variables.
+            // If the types match, two tuples are compatible and can be assigned to variables.
 
             // Assign to tuple without names:
             (int, int) size = GetSize(r);
