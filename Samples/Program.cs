@@ -257,40 +257,44 @@ namespace Samples
 
         static void Spans()
         {
-            var array = new int[100];
-            for (int i = 0; i < array.Length; i++)
+            var random = new Random();
+            var plannedSalesPerMonth = new decimal[12];
+            for (int i = 0; i < plannedSalesPerMonth.Length; i++)
             {
-                array[i] = i;
+                plannedSalesPerMonth[i] = 10_000m;
             }
 
             // A span is like a window into an array.
-            var from10To20 = new Span<int>(array, 10, 10);
-            var from5To25 = new Span<int>(array, 5, 20);
+            var q2 = new Span<decimal>(plannedSalesPerMonth, 4, 3);
+            var marchToJuly = plannedSalesPerMonth.AsSpan(3, 5);
 
-            Square(from10To20);
-            Print(from5To25);
+            Print<decimal>(marchToJuly);
+            Double(q2);
+            Print<decimal>(marchToJuly);
 
             // Spans can also be created for strings:
             var span = "<div>Hello World!</div>".AsSpan(5, 12); // as opposed to Substring(), no additional memory is allocated
-            WriteLine(span[span.Length - 1]);
+            Print(span);
         }
 
-        static void Square(Span<int> span)
+        static void Double(Span<decimal> span)
         {
             for (int i = 0; i < span.Length; i++)
             {
                 // Just like with refs, we can modify the values directly...
-                span[i] *= span[i];
+                span[i] *= 2;
             }
         }
 
         // ...except when we use a read-only span.
-        static void Print(ReadOnlySpan<int> span)
+        static void Print<T>(ReadOnlySpan<T> span)
         {
             foreach (var item in span)
             {
                 WriteLine(item);
             }
+
+            WriteLine();
         }
 
         #endregion
