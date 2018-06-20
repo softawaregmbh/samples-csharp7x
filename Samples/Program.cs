@@ -272,9 +272,13 @@ namespace Samples
             Double(q2);
             Print<decimal>(marchToJuly);
 
-            // Spans can also be created for strings:
-            var span = "<div>Hello World!</div>".AsSpan(5, 12); // as opposed to Substring(), no additional memory is allocated
-            Print(span);
+            // Spans can also be created for strings (as opposed to Substring(), no additional memory is allocated):
+            var html = "<div>Hello World!</div>";
+            var span = html.AsSpan();
+            var start = span.IndexOf('>') + 1;
+            var length = html.LastIndexOf('<') - start;
+
+            WriteLine(span.Slice(start, length).ToString());
         }
 
         static void Double(Span<decimal> span)
