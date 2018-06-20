@@ -196,19 +196,26 @@ namespace Samples
                 this.dataPoints = dataPoints;
             }
 
-            // This method returns a reference to the Y coordinate of a data point.
-            // That means you can assign new values.
-            public ref int FindDataPoint(int x)
+            // This method returns a reference to a data point.
+            // That means you can assign a new data point at the correct location in the array.
+            public ref (int x, int y) FindDataPoint(int x)
             {
                 for (int i = 0; i < dataPoints.Length; i++)
                 {
                     if (dataPoints[i].x == x)
                     {
-                        return ref dataPoints[i].y;
+                        return ref dataPoints[i];
                     }
                 }
 
                 throw new ArgumentException("DataPoint not found.");
+            }
+
+            // This method returns a reference to the Y-coordinate of a data point.
+            // Again, that means we can assign new values to the Y-coordinate of the point.
+            public ref int FindY(int x)
+            {
+                return ref FindDataPoint(x).y;
             }
 
             public void Print()
@@ -217,18 +224,29 @@ namespace Samples
                 {
                     Write(dataPoint.y);
                 }
+
+                WriteLine();
             }
         }
 
         static void Ref()
         {
             var series = new ChartSeries((1, 3), (2, 4), (3, 4), (4, 1));
+            series.Print();
 
             // Get a reference to the data point at x = 3...
-            ref int yAt3 = ref series.FindDataPoint(3);
+            ref (int x, int y) dataPoint = ref series.FindDataPoint(3);
 
             // .. and assign a new value.
-            yAt3 = 5;
+            dataPoint = (dataPoint.x, dataPoint.y + 1);
+
+            series.Print();
+
+            // Now get a reference to the Y value at X = 4
+            ref int yAt3 = ref series.FindY(4);
+
+            // .. and assign a new value.
+            yAt3++;
 
             series.Print();
         }
